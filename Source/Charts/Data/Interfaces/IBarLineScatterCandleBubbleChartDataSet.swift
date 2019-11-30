@@ -23,4 +23,8 @@ public protocol IBarLineScatterCandleBubbleChartDataSet: IChartDataSet
     var highlightLineWidth: CGFloat { get set }
     var highlightLineDashPhase: CGFloat { get set }
     var highlightLineDashLengths: [CGFloat]? { get set }
+    
+    /// Enable gradient's style
+    var drawBarGradientEnabled: Bool { get set }
+    var gradientPositions: [CGFloat]? { get set }
 }

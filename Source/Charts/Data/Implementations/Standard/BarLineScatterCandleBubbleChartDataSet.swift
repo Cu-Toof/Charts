@@ -24,6 +24,10 @@ open class BarLineScatterCandleBubbleChartDataSet: ChartDataSet, IBarLineScatter
     open var highlightLineDashPhase = CGFloat(0.0)
     open var highlightLineDashLengths: [CGFloat]?
     
+    /// Enable gradient's style
+    open var drawBarGradientEnabled = false
+    open var gradientPositions: [CGFloat]?
+    
     // MARK: - NSCopying
     
     open override func copy(with zone: NSZone? = nil) -> Any
@@ -33,6 +37,8 @@ open class BarLineScatterCandleBubbleChartDataSet: ChartDataSet, IBarLineScatter
         copy.highlightLineWidth = highlightLineWidth
         copy.highlightLineDashPhase = highlightLineDashPhase
         copy.highlightLineDashLengths = highlightLineDashLengths
+        copy.drawBarGradientEnabled = drawBarGradientEnabled
+        copy.gradientPositions = gradientPositions
         return copy
     }
 }

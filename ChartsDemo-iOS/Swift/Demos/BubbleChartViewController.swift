@@ -6,9 +6,7 @@
 //  Copyright © 2017 jc. All rights reserved.
 //
 
-#if canImport(UIKit)
-    import UIKit
-#endif
+import UIKit
 import Charts
 
 class BubbleChartViewController: DemoBaseViewController {
@@ -21,7 +19,7 @@ class BubbleChartViewController: DemoBaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         self.title = "Bubble Chart"
         self.options = [.toggleValues,
@@ -43,17 +41,14 @@ class BubbleChartViewController: DemoBaseViewController {
         chartView.setScaleEnabled(true)
         chartView.maxVisibleCount = 200
         chartView.pinchZoomEnabled = true
-        
-        chartView.legend.horizontalAlignment = .right
-        chartView.legend.verticalAlignment = .top
-        chartView.legend.orientation = .vertical
-        chartView.legend.drawInside = false
-        chartView.legend.font = UIFont(name: "HelveticaNeue-Light", size: 10)!
+        chartView.legend.enabled = false
         
         chartView.leftAxis.labelFont = UIFont(name: "HelveticaNeue-Light", size: 10)!
         chartView.leftAxis.spaceTop = 0.3
         chartView.leftAxis.spaceBottom = 0.3
         chartView.leftAxis.axisMinimum = 0
+        chartView.leftAxis.labelCount = 7
+        chartView.leftAxis.granularity = 4
         
         chartView.rightAxis.enabled = false
         
@@ -71,42 +66,35 @@ class BubbleChartViewController: DemoBaseViewController {
             return
         }
         
-        self.setDataCount(Int(sliderX.value), range: UInt32(sliderY.value))
+        self.setDataCount(7, range: UInt32(sliderY.value))
     }
     
     func setDataCount(_ count: Int, range: UInt32) {
-        let yVals1 = (0..<count).map { (i) -> BubbleChartDataEntry in
-            let val = Double(arc4random_uniform(range))
-            let size = CGFloat(arc4random_uniform(range))
-            return BubbleChartDataEntry(x: Double(i), y: val, size: size, icon: UIImage(named: "icon"))
+        var yVals1 = (0..<count).map { (i) -> BubbleChartDataEntry in
+            return BubbleChartDataEntry(x: Double(i), y: 5, size: 5)
         }
-        let yVals2 = (0..<count).map { (i) -> BubbleChartDataEntry in
-            let val = Double(arc4random_uniform(range))
-            let size = CGFloat(arc4random_uniform(range))
-            return BubbleChartDataEntry(x: Double(i), y: val, size: size, icon: UIImage(named: "icon"))
-        }
-        let yVals3 = (0..<count).map { (i) -> BubbleChartDataEntry in
-            let val = Double(arc4random_uniform(range))
-            let size = CGFloat(arc4random_uniform(range))
-            return BubbleChartDataEntry(x: Double(i), y: val, size: size)
-        }
+        yVals1.append(BubbleChartDataEntry(x: Double(yVals1.count-1), y: 0, size: 0))
         
-        let set1 = BubbleChartDataSet(entries: yVals1, label: "DS 1")
-        set1.drawIconsEnabled = false
-        set1.setColor(ChartColorTemplates.colorful()[0], alpha: 0.5)
-        set1.drawValuesEnabled = true
+        var yVals2 = (0..<count).map { (i) -> BubbleChartDataEntry in
+            return BubbleChartDataEntry(x: Double(i), y: 12, size: 5)
+        }
+        yVals2.append(BubbleChartDataEntry(x: Double(yVals1.count-1), y: 0, size: 0))
         
-        let set2 = BubbleChartDataSet(entries: yVals2, label: "DS 2")
-        set2.drawIconsEnabled = false
-        set2.iconsOffset = CGPoint(x: 0, y: 15)
-        set2.setColor(ChartColorTemplates.colorful()[1], alpha: 0.5)
-        set2.drawValuesEnabled = true
+        var yVals3 = (0..<count).map { (i) -> BubbleChartDataEntry in
+            return BubbleChartDataEntry(x: Double(i), y: 20, size: 5)
+        }
+        yVals3.append(BubbleChartDataEntry(x: Double(yVals1.count-1), y: 0, size: 0))
         
         let set3 = BubbleChartDataSet(entries: yVals3, label: "DS 3")
-        set3.setColor(ChartColorTemplates.colorful()[2], alpha: 0.5)
         set3.drawValuesEnabled = true
+        set3.drawBarGradientEnabled = true
+        set3.gradientPositions = [0, 100]
+        set3.colors = [
+            UIColor.black,
+            UIColor(red: 255/255, green: 14/255, blue: 19/255, alpha: 1)
+        ]
         
-        let data = BubbleChartData(dataSets: [set1, set2, set3])
+        let data = BubbleChartData(dataSets: [set3])
         data.setDrawValues(false)
         data.setValueFont(UIFont(name: "HelveticaNeue-Light", size: 7)!)
         data.setHighlightCircleWidth(1.5)

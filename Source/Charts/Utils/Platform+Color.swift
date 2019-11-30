@@ -26,6 +26,23 @@ extension UIColor
 {
     static var labelOrBlack: UIColor { labelColor }
 }
+
+extension NSUIColor
+{
+    var nsuirgba: (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat)? {
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        var alpha: CGFloat = 0
+        
+        guard getRed(&red, green: &green, blue: &blue, alpha: &alpha) else {
+            return nil
+        }
+        
+        return (red: red, green: green, blue: blue, alpha: alpha)
+    }
+}
+
 #endif
 
 #if canImport(AppKit)
