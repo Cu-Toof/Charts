@@ -6,6 +6,7 @@
 //
 
 #if canImport(UIKit)
+
 public struct NSUIGradient {
     let gradientStart: CGPoint
     let gradientEnd: CGPoint
@@ -59,4 +60,5 @@ public struct NSUIGradient {
             gradient: gradient)
     }
 }
+
 #endif
